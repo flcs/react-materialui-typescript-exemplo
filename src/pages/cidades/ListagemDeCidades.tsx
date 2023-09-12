@@ -10,6 +10,7 @@ import { useDebounce } from '../../shared/hooks';
 
 
 export const ListagemDeCidades: React.FC = () => {
+  console.log("ListagemDeCidades")
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
   const navigate = useNavigate();
@@ -29,21 +30,21 @@ export const ListagemDeCidades: React.FC = () => {
 
 
   useEffect(() => {
+    console.log("ListagemDeCidades useEffect")
     setIsLoading(true);
 
     debounce(() => {
       CidadesService.getAll(pagina, busca)
         .then((result) => {
-          setIsLoading(false);
-
           if (result instanceof Error) {
             alert(result.message);
           } else {
-            console.log(result);
+            console.log("****** CIDADES APOS O FETCH: ", result);
 
             setTotalCount(result.totalCount);
             setRows(result.data);
           }
+          setIsLoading(false);
         });
     });
   }, [busca, pagina]);
